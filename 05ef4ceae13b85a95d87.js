@@ -57,7 +57,7 @@ const taskadd = document.querySelector(".task-add");
 
 const content = document.querySelector('.content');
 
-projectDropdown = document.querySelector('.project');
+const projectDropdown = document.querySelector('.project');
 
 addpro.addEventListener("click", () => {
     proDialog.showModal();
@@ -273,6 +273,8 @@ function deleteTask(todo) {
 }
 
 
+window.onload = function() {
+    populateProjectDropdown();
+    displayProjects();
+};
 
-displayProjects();
-populateProjectDropdown();
