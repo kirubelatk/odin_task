@@ -49,16 +49,26 @@ nav{
 
 .main{
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 3fr;
     background-color: white;
 }
 .sidebar{
     
     height: 84vh;
-    font-size: 24px;
+    font-size: 35px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.side-cont{
+    margin-left: 50px;
+}
+.side-cont li{
+    border-bottom: 1px solid #13293d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 200px;
+    margin-bottom: 20px;
+    
 }
 ul{
     list-style-type:none;
