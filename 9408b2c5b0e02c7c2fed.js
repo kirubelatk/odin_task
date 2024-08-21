@@ -34,8 +34,7 @@ function addProjectdefault(name) {
 addProjectdefault("Goals");
 addProjectdefault("This Month");
 
-console.log(projects[0].name);
-console.log(projects[1].name);
+
 
 /* 
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
