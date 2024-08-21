@@ -159,73 +159,234 @@ function displayTasks(project) {
 }
 
 function displayProjectsInfo(project) {
+
     content.innerHTML = '';
+
+    const box = document.createElement('div');
+    box.style.border = '1px solid #13293d';
+    box.style.borderRadius = '10px';
+    box.style.padding = '20px';
+    box.style.margin = '50px';
+    box.style.position = 'relative'; // Allow button placement
 
     const projectTitle = document.createElement('h1');
     projectTitle.textContent = project.name;
-    content.appendChild(projectTitle);
+    projectTitle.style.marginBottom = '20px';
+    projectTitle.style.textAlign = 'center'; // Center the project title
+    box.appendChild(projectTitle);
 
-    const taskList = document.createElement('ul');
-    content.appendChild(taskList);
+    const table = document.createElement('table');
+    table.style.width = '100%';
+    table.style.borderCollapse = 'collapse';
+    table.style.marginBottom = '20px'; // Space between table and button
+
+    const headerRow = document.createElement('tr');
+    const taskHeader = document.createElement('th');
+    const dueDateHeader = document.createElement('th');
+
+    taskHeader.textContent = 'Task';
+    taskHeader.style.textAlign = 'left';
+    taskHeader.style.borderBottom = '1px solid #13293d';
+    taskHeader.style.padding = '10px';
+
+    dueDateHeader.textContent = 'Due Date';
+    dueDateHeader.style.textAlign = 'left';
+    dueDateHeader.style.borderBottom = '1px solid #13293d';
+    dueDateHeader.style.padding = '10px';
+
+    headerRow.appendChild(taskHeader);
+    headerRow.appendChild(dueDateHeader);
+    table.appendChild(headerRow);
 
     project.todos.forEach(todo => {
-        const listItem = document.createElement('li');
-        listItem.textContent = todo.title;  // Display task title
-        listItem.addEventListener('click', () => {
+        const row = document.createElement('tr');
+
+        const taskCell = document.createElement('td');
+        taskCell.textContent = todo.title;
+        taskCell.style.padding = '10px';
+        taskCell.style.borderBottom = '1px solid #13293d';
+        taskCell.style.cursor = 'pointer';
+
+        taskCell.addEventListener('click', () => {
             displayTasksInfo(todo);
-        })
-        content.appendChild(listItem);
+        });
+
+        const dueDateCell = document.createElement('td');
+        dueDateCell.textContent = todo.dueDate;
+        dueDateCell.style.padding = '10px';
+        dueDateCell.style.borderBottom = '1px solid #13293d';
+
+        row.appendChild(taskCell);
+        row.appendChild(dueDateCell);
+        table.appendChild(row);
     });
+
+    box.appendChild(table);
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.display = 'flex';
+    buttonContainer.style.justifyContent = 'flex-end';
 
     const addbut = document.createElement('button');
     addbut.textContent = 'Add Task';
+    addbut.style.backgroundColor = '#13293d';
+    addbut.style.color = 'white';
+    addbut.style.border = 'none';
+    addbut.style.height = '40px';
+    addbut.style.width = '160px';
+    addbut.style.borderRadius = '8px';
+    addbut.style.fontSize = '20px';
+    addbut.style.cursor = 'pointer';
+
     addbut.addEventListener('click', () => {
         taskDialog.showModal();
-    })
-    content.appendChild(addbut);
-    
+    });
+
+    buttonContainer.appendChild(addbut);
+    box.appendChild(buttonContainer);
+
+    content.appendChild(box);
 }
+
 function displayTasksInfo(task) {
 
     content.innerHTML = '';
 
-    const taskTitle = document.createElement('h1');
-    taskTitle.textContent = task.title;
-    content.appendChild(taskTitle);
+    const box = document.createElement('div');
+    box.style.border = '1px solid #13293d';
+    box.style.borderRadius = '10px';
+    box.style.padding = '20px';
+    box.style.margin = '50px';
+    box.style.position = 'relative'; // Allow button placement
 
-    const taskDescription = document.createElement('p');
-    taskDescription.textContent = `Description: ${task.description}`;  
-    content.appendChild(taskDescription);
+    const table = document.createElement('table');
+    table.style.width = '100%';
+    table.style.borderCollapse = 'collapse';
 
-    const taskDueDate = document.createElement('p');
-    taskDueDate.textContent = `Due Date: ${task.dueDate}`;  
-    content.appendChild(taskDueDate);
+    const row1 = document.createElement('tr');
+    const row2 = document.createElement('tr');
+    const row3 = document.createElement('tr');
+    const row4 = document.createElement('tr');
+    const row5 = document.createElement('tr');
 
-    const taskPriority = document.createElement('p');
-    taskPriority.textContent = `Priority: ${task.priority}`;  
-    content.appendChild(taskPriority);
+    const titleHeader = document.createElement('th');
+    titleHeader.textContent = 'Task Title';
+    titleHeader.style.textAlign = 'left';
+    titleHeader.style.borderBottom = '1px solid #13293d';
 
-    const taskNotes = document.createElement('p');
-    taskNotes.textContent = `Notes: ${task.notes}`;  
-    content.appendChild(taskNotes);
+    const titleCell = document.createElement('td');
+    titleCell.textContent = task.title;
+    titleCell.style.padding = '10px';
+    titleCell.style.borderBottom = '1px solid #13293d';
 
-   const edittask = document.createElement('button');
+    row1.appendChild(titleHeader);
+    row1.appendChild(titleCell);
+
+    const descHeader = document.createElement('th');
+    descHeader.textContent = 'Description';
+    descHeader.style.textAlign = 'left';
+    descHeader.style.borderBottom = '1px solid #13293d';
+
+    const descCell = document.createElement('td');
+    descCell.textContent = task.description;
+    descCell.style.padding = '10px';
+    descCell.style.borderBottom = '1px solid #13293d';
+
+    row2.appendChild(descHeader);
+    row2.appendChild(descCell);
+
+    const dateHeader = document.createElement('th');
+    dateHeader.textContent = 'Due Date';
+    dateHeader.style.textAlign = 'left';
+    dateHeader.style.borderBottom = '1px solid #13293d';
+
+    const dateCell = document.createElement('td');
+    dateCell.textContent = task.dueDate;
+    dateCell.style.padding = '10px';
+    dateCell.style.borderBottom = '1px solid #13293d';
+
+    row3.appendChild(dateHeader);
+    row3.appendChild(dateCell);
+
+    const priorityHeader = document.createElement('th');
+    priorityHeader.textContent = 'Priority';
+    priorityHeader.style.textAlign = 'left';
+    priorityHeader.style.borderBottom = '1px solid #13293d';
+
+    const priorityCell = document.createElement('td');
+    priorityCell.textContent = task.priority;
+    priorityCell.style.padding = '10px';
+    priorityCell.style.borderBottom = '1px solid #13293d';
+
+    row4.appendChild(priorityHeader);
+    row4.appendChild(priorityCell);
+
+    const notesHeader = document.createElement('th');
+    notesHeader.textContent = 'Notes';
+    notesHeader.style.textAlign = 'left';
+    notesHeader.style.borderBottom = '1px solid #13293d';
+
+    const notesCell = document.createElement('td');
+    notesCell.textContent = task.notes;
+    notesCell.style.padding = '10px';
+    notesCell.style.borderBottom = '1px solid #13293d';
+
+    row5.appendChild(notesHeader);
+    row5.appendChild(notesCell);
+
+    table.appendChild(row1);
+    table.appendChild(row2);
+    table.appendChild(row3);
+    table.appendChild(row4);
+    table.appendChild(row5);
+
+    box.appendChild(table);
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.display = 'flex';
+    buttonContainer.style.justifyContent = 'flex-end';
+    buttonContainer.style.marginTop = '20px';
+
+    const edittask = document.createElement('button');
     edittask.textContent = 'Edit Task';
+    edittask.style.backgroundColor = '#13293d';
+    edittask.style.color = 'white';
+    edittask.style.border = 'none';
+    edittask.style.height = '40px';
+    edittask.style.width = '160px';
+    edittask.style.borderRadius = '8px';
+    edittask.style.fontSize = '20px';
+    edittask.style.cursor = 'pointer';
+    edittask.style.marginRight = '10px';
 
     edittask.addEventListener('click', () => {
         editTask(task);
-    })
-
-
-    content.appendChild(edittask);
+    });
 
     const deletetask = document.createElement('button');
     deletetask.textContent = 'Delete Task';
+    deletetask.style.backgroundColor = '#13293d';
+    deletetask.style.color = 'white';
+    deletetask.style.border = 'none';
+    deletetask.style.height = '40px';
+    deletetask.style.width = '160px';
+    deletetask.style.borderRadius = '8px';
+    deletetask.style.fontSize = '20px';
+    deletetask.style.cursor = 'pointer';
+
     deletetask.addEventListener('click', () => {
-       deleteTask(task);
-    })
-    content.appendChild(deletetask);
+        deleteTask(task);
+    });
+
+    buttonContainer.appendChild(edittask);
+    buttonContainer.appendChild(deletetask);
+
+    box.appendChild(buttonContainer);
+
+    content.appendChild(box);
 }
+
+
 
 function editTask(todo) {
     taskDialog.showModal();
@@ -233,7 +394,7 @@ function editTask(todo) {
     document.querySelector(".description").value = todo.description;
     document.querySelector(".dueDate").value = todo.dueDate;
     
-    // Select the correct priority radio button
+    
     document.querySelector('.priority').value = todo.priority;
     
     document.querySelector(".notes").value = todo.notes;

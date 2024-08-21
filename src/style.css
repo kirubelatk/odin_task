@@ -161,7 +161,7 @@ input.projectName{
     margin-top: 40px;
 }
 .pro-add{
-    background-color: #0066ff;
+    background-color: #13293d;
     color: white;
     border: none;
     height: 40px;
@@ -171,7 +171,7 @@ input.projectName{
     cursor: pointer;
 }
 .close1{
-    background-color: #D92525;
+    background-color: #13293d;
     color: white;
     border: none;
     height: 40px;
@@ -182,13 +182,13 @@ input.projectName{
 }
 .pro-add:hover{
     background-color: transparent;
-    color: #0066ff;
-    border: 1px solid #0066ff;
+    color: #13293d;
+    border: 1px solid #13293d;
 }
 .close1:hover{
     background-color: transparent;
-    color: #D92525;
-    border: 1px solid #D92525;
+    color: #13293d;
+    border: 1px solid #13293d;
 }
 .task-dialog{
     border: 1px solid white;
@@ -229,7 +229,7 @@ textarea{
 }
 
 .task-add{
-    background-color: #0066ff;
+    background-color: #13293d;
     color: white;
     border: none;
     height: 40px;
@@ -239,7 +239,7 @@ textarea{
     cursor: pointer;
 }
 .close2{
-    background-color: #D92525;
+    background-color: #13293d;
     color: white;
     border: none;
     height: 40px;
@@ -250,13 +250,13 @@ textarea{
 }
 .task-add:hover{
     background-color: transparent;
-    color: #0066ff;
-    border: 1px solid #0066ff;
+    color: #13293d;
+    border: 1px solid #13293d;
 }
 .close2:hover{
     background-color: transparent;
-    color: #D92525;
-    border: 1px solid #D92525;
+    color: #13293d;
+    border: 1px solid #13293d;
 }
 .row{
     display: flex;
