@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="609a232ab53e413e38d2.css">
-    <title>TODO List</title>
+    <title> MYtasks</title>
 <script defer src="main.js"></script></head>
 <body>
     <header>
         
             <nav>
                 <div class="logo">
-                    <h1>TODO List</h1>
+                    <h1>MYtasks</h1>
                 </div>
                 <div class="links">
                     <button class="home link-but" > Home </button>
@@ -32,17 +32,15 @@
             <li>Home</li>
             <li>About</li>
             
-                <li>Projects</li>
+                <li>All Projects</li>
                 <ul class="dropdown-content">
                    
                 </ul>
             
-            <li> Tasks</li>
+            <li> All Tasks</li>
             
                 <ul class="dropdown2-content">
-                    <li>Task 1</li>
-                    <li>Task 2</li>
-                    <li>Task 3</li>
+            
                 </ul>
             
             <li>Contact</li>
@@ -54,12 +52,24 @@
         <h1 class="content-header">
             Welcome User 
         </h1>
-
+        <div class="messages">
+            <p class="wel-msg">
+                welcome MYtasks website you can add projects and tasks to remember and organize 
+            </p>
+            <p class="wel-msg">
+                Also you can track your projects and tasks and edit or delete them
+            </p>
+        </div>
         <div class="content-main">
-            <button class="addProjects"> + </button>
+            <div class="line">
+                <button class="addProjects"> + </button>
             <button class="addTasks"> + </button>
-            <p>Add Project</p>
-            <p>Add Task</p>
+            </div>
+            <div class="line">
+                <p class="but-lab">Add Project</p>
+            <p class="but-lab">Add Task</p>
+            </div>
+            
         </div>
 
             
@@ -68,48 +78,69 @@
     </div>
 
         <dialog class="pro-dialog">
-            <h1>
+            <h2 class="dia-header">
                 Add Project
-            </h1>
-            <form action="">
-                <label for="projectName">Project Name</label>
-                <input type="text" class="projectName">
-                <button class="pro-add">Add</button>
+            </h2>
+            <form action="" class="dia-form">
+                <div class="pro-inp">
+                    <input type="text" class="projectName" placeholder="Enter project name">
+                </div>
+                <div class="dia-but">
+                    <button class="pro-add">Add</button>
+                <button class="close1">Close</button>
+                </div>
+                
             </form>
-            <button class="close1">Close</button>
+            
         </dialog>
 
         <dialog class="task-dialog">
-            <h1>
+            <h2 class="dia-header">
                 Add Task
-            </h1>
+            </h2>
             <form action="">
-                <label for="title">Title</label>
-                <input type="text" class="title">
-                <label for="description">Description</label>
-                <input type="text" class="description">
-                <label for="dueDate">Due Date</label>
-                <input type="date" class="dueDate">
+                <div class="dia-task">
 
-                <label>Priority</label>
-                <input type="radio" class="priority-low" name="priority" value="low">
-                <label for="priority-low" class="prioritylevels">Low</label>
-                <input type="radio" class="priority-medium" name="priority" value="medium">
-                <label for="priority-medium" class="prioritylevels">Medium</label>
-                <input type="radio" class="priority-high" name="priority" value="high">
-                <label for="priority-high" class="prioritylevels">High</label>
+                </div>
+                <div class="row">
+                    <input type="text" class="title" placeholder="Enter task title">
+                
+                    <input type="text" class="description" placeholder="Enter task description">
+                </div>
+               
+                <div class="row">
+                    <input type="date" class="dueDate">
 
-                <label for="notes">Notes</label>
-                <textarea name="notes" class="notes" rows="5" placeholder="Enter notes"></textarea>
-                <label for="project">Project</label>
-                <select class="project" name="project" required>
-                    <option value="" disabled selected>Select project</option>
-                    
-                </select>
-                <button class="task-add">Add</button>
+                
+                </div>
+                <div class="row">
+                    <label>Priority</label>
+                    <input type="radio" class="priority-low" name="priority" value="low">
+                    <label for="priority-low" class="prioritylevels">Low</label>
+                    <input type="radio" class="priority-medium" name="priority" value="medium">
+                    <label for="priority-medium" class="prioritylevels">Medium</label>
+                    <input type="radio" class="priority-high" name="priority" value="high">
+                    <label for="priority-high" class="prioritylevels">High</label>
+                </div>
+                
+                <div class="row">
+                    <textarea name="notes" class="notes" rows="5" placeholder="Enter notes"></textarea>
+                    <select class="project" name="project" required>
+                        <option value="" disabled selected>Select project</option>
+                        
+                    </select>
+                </div>
+
+                
+
+                <div class="dia-but">
+                    <button class="task-add">Add</button>
+                    <button class="close2">Close</button>
+                </div>
+               
             </form>
-            <button class="close2">Close</button>
+            
         </dialog>
-        <script src="9408b2c5b0e02c7c2fed.js"></script>
+       <script src="9408b2c5b0e02c7c2fed.js"></script> 
 </body>
 </html>
