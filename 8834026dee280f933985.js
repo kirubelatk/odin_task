@@ -1,5 +1,7 @@
 
 import "./style.css";
+import { format, parseISO, differenceInDays } from 'date-fns';
+
 class Todo {
     constructor(title, description, dueDate, priority, notes, projectName ,checkbox) {
         this.title = title;
@@ -248,8 +250,8 @@ function displayProjectsInfo(project) {
     content.appendChild(box);
 }
 
-function displayTasksInfo(task) {
 
+function displayTasksInfo(task) {
     content.innerHTML = '';
 
     const box = document.createElement('div');
@@ -268,6 +270,7 @@ function displayTasksInfo(task) {
     const row3 = document.createElement('tr');
     const row4 = document.createElement('tr');
     const row5 = document.createElement('tr');
+    const row6 = document.createElement('tr'); // For days remaining
 
     const titleHeader = document.createElement('th');
     titleHeader.textContent = 'Task Title';
@@ -301,7 +304,8 @@ function displayTasksInfo(task) {
     dateHeader.style.borderBottom = '1px solid #13293d';
 
     const dateCell = document.createElement('td');
-    dateCell.textContent = task.dueDate;
+    const formattedDate = format(parseISO(task.dueDate), 'MMMM do, yyyy');
+    dateCell.textContent = formattedDate;
     dateCell.style.padding = '10px';
     dateCell.style.borderBottom = '1px solid #13293d';
 
@@ -334,11 +338,30 @@ function displayTasksInfo(task) {
     row5.appendChild(notesHeader);
     row5.appendChild(notesCell);
 
+    // Calculate and display days remaining
+    const today = new Date();
+    const dueDate = parseISO(task.dueDate);
+    const daysRemaining = differenceInDays(dueDate, today);
+
+    const daysRemainingHeader = document.createElement('th');
+    daysRemainingHeader.textContent = 'Days Remaining';
+    daysRemainingHeader.style.textAlign = 'left';
+    daysRemainingHeader.style.borderBottom = '1px solid #13293d';
+
+    const daysRemainingCell = document.createElement('td');
+    daysRemainingCell.textContent = `${daysRemaining} days left`;
+    daysRemainingCell.style.padding = '10px';
+    daysRemainingCell.style.borderBottom = '1px solid #13293d';
+
+    row6.appendChild(daysRemainingHeader);
+    row6.appendChild(daysRemainingCell);
+
     table.appendChild(row1);
     table.appendChild(row2);
     table.appendChild(row3);
     table.appendChild(row4);
     table.appendChild(row5);
+    table.appendChild(row6); // Append the days remaining row to the table
 
     box.appendChild(table);
 
@@ -385,7 +408,6 @@ function displayTasksInfo(task) {
 
     content.appendChild(box);
 }
-
 
 
 function editTask(todo) {
