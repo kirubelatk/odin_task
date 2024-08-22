@@ -106,17 +106,7 @@ function displayProjects() {
     projects.forEach(project => {
         const listItem = document.createElement('li');
         listItem.style.cursor = 'pointer';
-
-
-        const icon = document.createElement('img');
-        icon.src = "folder"; 
-        icon.alt = 'Task Icon';
-        
-        // Spacing between icon and text
-
-        listItem.appendChild(icon);
-
-        listItem.appendChild(document.createTextNode(project.name));
+        listItem.textContent = project.name;
         listItem.addEventListener('click', () => {
             displayProjectsInfo(project);
         });
@@ -163,14 +153,7 @@ function displayTasks(project) {
     project.todos.forEach(todo => {
         const listItem = document.createElement('li');
         listItem.style.cursor = 'pointer';
-
-        const icon = document.createElement('img');
-        icon.src = 'task'; // Replace with your icon path
-        icon.alt = 'Task Icon'; // Spacing between icon and text
-
-        listItem.appendChild(icon);
-        listItem.appendChild(document.createTextNode(todo.title));
-        
+        listItem.textContent = todo.title;  
         listItem.addEventListener('click', () => {
             displayTasksInfo(todo);
         });
@@ -497,4 +480,5 @@ function deleteProject(projectName) {
 window.onload = function() {
     populateProjectDropdown();
     displayProjects();
+    displayTasks(projects)
 };
