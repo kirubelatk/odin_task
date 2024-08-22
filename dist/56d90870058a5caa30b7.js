@@ -1,48 +1,62 @@
-
 import "./style.css";
+import folder from "./fold.png";
+import task from "./task.svg";
 import { format, parseISO, differenceInDays } from 'date-fns';
 
 class Todo {
-    constructor(title, description, dueDate, priority, notes, projectName ,checkbox) {
+    constructor(title, description, dueDate, priority, notes, projectName) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
         this.projectName = projectName;
-        this.checkbox = checkbox // Storing the project name in the Todo
     }
 }
 
 class Project {
     constructor(name) {
         this.name = name;
-        this.todos = []; // Each project has its own list of todos
+        this.todos = [];
     }
 
     addTodo(todo) {
-        this.todos.push(todo); // Add todo to the project’s todo list
+        this.todos.push(todo);
     }
 }
 
 let projects = [];
+
+// Load projects from localStorage or create default ones
+function loadProjects() {
+    let storedProjects = localStorage.getItem('projects');
+    if (storedProjects) {
+        let parsedProjects = JSON.parse(storedProjects);
+        projects = parsedProjects.map(proj => {
+            let project = new Project(proj.name);
+            project.todos = proj.todos.map(todo => new Todo(
+                todo.title, todo.description, todo.dueDate, todo.priority, todo.notes, todo.projectName
+            ));
+            return project;
+        });
+    } else {
+        addProjectdefault("Goals");
+        addProjectdefault("This Month");
+        saveProjectsToLocalStorage();
+    }
+}
+
+function saveProjectsToLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+}
 
 function addProjectdefault(name) {
     let newProject = new Project(name);
     projects.push(newProject);
 }
 
-// Creating default projects
-addProjectdefault("Goals");
-addProjectdefault("This Month");
-
-
-
-/* 
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-*/
+// Initial load of projects
+loadProjects();
 
 const addpro = document.querySelector('.addProjects');
 const addtod = document.querySelector('.addTasks');
@@ -70,17 +84,14 @@ addtod.addEventListener("click", () => {
 
 cancel1.addEventListener("click", () => {
     proDialog.close();
-})
+});
 
 cancel2.addEventListener("click", () => {
     taskDialog.close();
-})
+});
 
 function populateProjectDropdown() {
-    
-    projectDropdown.innerHTML = '<option value="" disabled selected>Select project</option>'; // Reset dropdown
-    
-    // Loop through the projects array and create an option for each project
+    projectDropdown.innerHTML = '<option value="" disabled selected>Select project</option>';
     projects.forEach(project => {
         const option = document.createElement('option');
         option.value = project.name;
@@ -91,35 +102,40 @@ function populateProjectDropdown() {
 
 function displayProjects() {
     const projectList = document.querySelector('.dropdown-content');
-
-    // Clear the list before adding new elements
     projectList.innerHTML = '';
-
-    // Loop through all the projects and add them to the project list
     projects.forEach(project => {
         const listItem = document.createElement('li');
-        listItem.textContent = project.name;
+        listItem.style.cursor = 'pointer';
+
+
+        const icon = document.createElement('img');
+        icon.src = "folder"; 
+        icon.alt = 'Task Icon';
+        
+        // Spacing between icon and text
+
+        listItem.appendChild(icon);
+
+        listItem.appendChild(document.createTextNode(project.name));
         listItem.addEventListener('click', () => {
             displayProjectsInfo(project);
-        })
+        });
         projectList.appendChild(listItem);
     });
 }
 
-proadd.addEventListener("click", () => {
-
+proadd.addEventListener("click", (event) => {
     event.preventDefault();
-    let name = document.querySelector(".projectName").value; // Assuming there's an input with id="projectName"
+    let name = document.querySelector(".projectName").value;
     let newProject = new Project(name);
     projects.push(newProject);
-
-    proDialog.close(); 
-    // Close dialog
+    saveProjectsToLocalStorage();
+    proDialog.close();
     displayProjects();
     populateProjectDropdown();
 });
 
-taskadd.addEventListener("click", () => {
+taskadd.addEventListener("click", (event) => {
     event.preventDefault();
     let title = document.querySelector(".title").value;
     let description = document.querySelector(".description").value;
@@ -128,59 +144,59 @@ taskadd.addEventListener("click", () => {
     let notes = document.querySelector('.notes').value;
     let projectName = document.querySelector('.project').value;
     
-    // Create a new todo
     let newTodo = new Todo(title, description, dueDate, priority, notes, projectName);
-
-    // Find the project that matches the project name
     let project = projects.find(proj => proj.name === projectName);
     
     if (project) {
-        project.addTodo(newTodo); // Add the todo to the project
+        project.addTodo(newTodo);
+        saveProjectsToLocalStorage();
     } else {
         console.error(`Project "${projectName}" not found!`);
     }
-    taskDialog.close(); // Close dialog
+    taskDialog.close();
     displayTasks(project);
 });
 
 function displayTasks(project) {
     const taskList = document.querySelector('.dropdown2-content');
-
-    // Clear the list before adding new tasks
     taskList.innerHTML = '';
-
-   
     project.todos.forEach(todo => {
         const listItem = document.createElement('li');
-        listItem.textContent = todo.title;  // Display task title
+        listItem.style.cursor = 'pointer';
+
+        const icon = document.createElement('img');
+        icon.src = 'task'; // Replace with your icon path
+        icon.alt = 'Task Icon'; // Spacing between icon and text
+
+        listItem.appendChild(icon);
+        listItem.appendChild(document.createTextNode(todo.title));
+        
         listItem.addEventListener('click', () => {
             displayTasksInfo(todo);
-        })
+        });
         taskList.appendChild(listItem);
     });
 }
 
 function displayProjectsInfo(project) {
-
     content.innerHTML = '';
-
     const box = document.createElement('div');
     box.style.border = '1px solid #13293d';
     box.style.borderRadius = '10px';
     box.style.padding = '20px';
     box.style.margin = '50px';
-    box.style.position = 'relative'; // Allow button placement
+    box.style.position = 'relative';
 
     const projectTitle = document.createElement('h1');
     projectTitle.textContent = project.name;
     projectTitle.style.marginBottom = '20px';
-    projectTitle.style.textAlign = 'center'; // Center the project title
+    projectTitle.style.textAlign = 'center';
     box.appendChild(projectTitle);
 
     const table = document.createElement('table');
     table.style.width = '100%';
     table.style.borderCollapse = 'collapse';
-    table.style.marginBottom = '20px'; // Space between table and button
+    table.style.marginBottom = '20px';
 
     const headerRow = document.createElement('tr');
     const taskHeader = document.createElement('th');
@@ -228,6 +244,7 @@ function displayProjectsInfo(project) {
     const buttonContainer = document.createElement('div');
     buttonContainer.style.display = 'flex';
     buttonContainer.style.justifyContent = 'flex-end';
+    buttonContainer.style.gap = '20px';
 
     const addbut = document.createElement('button');
     addbut.textContent = 'Add Task';
@@ -244,12 +261,29 @@ function displayProjectsInfo(project) {
         taskDialog.showModal();
     });
 
+    const delProjectBut = document.createElement('button');
+    delProjectBut.textContent = 'Delete Project';
+    delProjectBut.style.backgroundColor = '#d9534f';
+    delProjectBut.style.color = 'white';
+    delProjectBut.style.border = 'none';
+    delProjectBut.style.height = '40px';
+    delProjectBut.style.width = '160px';
+    delProjectBut.style.borderRadius = '8px';
+    delProjectBut.style.fontSize = '20px';
+    delProjectBut.style.cursor = 'pointer';
+
+    delProjectBut.addEventListener('click', () => {
+        if (confirm(`Are you sure you want to delete the project "${project.name}"?`)) {
+            deleteProject(project.name);
+        }
+    });
+
     buttonContainer.appendChild(addbut);
+    buttonContainer.appendChild(delProjectBut);
     box.appendChild(buttonContainer);
 
     content.appendChild(box);
 }
-
 
 function displayTasksInfo(task) {
     content.innerHTML = '';
@@ -259,7 +293,7 @@ function displayTasksInfo(task) {
     box.style.borderRadius = '10px';
     box.style.padding = '20px';
     box.style.margin = '50px';
-    box.style.position = 'relative'; // Allow button placement
+    box.style.position = 'relative';
 
     const table = document.createElement('table');
     table.style.width = '100%';
@@ -270,7 +304,7 @@ function displayTasksInfo(task) {
     const row3 = document.createElement('tr');
     const row4 = document.createElement('tr');
     const row5 = document.createElement('tr');
-    const row6 = document.createElement('tr'); // For days remaining
+    const row6 = document.createElement('tr');
 
     const titleHeader = document.createElement('th');
     titleHeader.textContent = 'Task Title';
@@ -338,7 +372,6 @@ function displayTasksInfo(task) {
     row5.appendChild(notesHeader);
     row5.appendChild(notesCell);
 
-    // Calculate and display days remaining
     const today = new Date();
     const dueDate = parseISO(task.dueDate);
     const daysRemaining = differenceInDays(dueDate, today);
@@ -361,7 +394,7 @@ function displayTasksInfo(task) {
     table.appendChild(row3);
     table.appendChild(row4);
     table.appendChild(row5);
-    table.appendChild(row6); // Append the days remaining row to the table
+    table.appendChild(row6);
 
     box.appendChild(table);
 
@@ -409,21 +442,15 @@ function displayTasksInfo(task) {
     content.appendChild(box);
 }
 
-
 function editTask(todo) {
     taskDialog.showModal();
     document.querySelector(".title").value = todo.title;
     document.querySelector(".description").value = todo.description;
     document.querySelector(".dueDate").value = todo.dueDate;
-    
-    
     document.querySelector('.priority').value = todo.priority;
-    
     document.querySelector(".notes").value = todo.notes;
 
     const taskadd = document.querySelector(".task-add");
-
-    // Ensure the listener only fires once to avoid multiple events
     taskadd.removeEventListener('click', updateTask);
     taskadd.addEventListener('click', updateTask, { once: true });
 
@@ -435,8 +462,9 @@ function editTask(todo) {
         todo.priority = document.querySelector('.priority').value;
         todo.notes = document.querySelector('.notes').value;
 
-        taskDialog.close(); // Close the dialog after editing
-        displayTasksInfo(todo); // Refresh task display with updated info
+        saveProjectsToLocalStorage();
+        taskDialog.close();
+        displayTasksInfo(todo);
     }
 }
 
@@ -446,7 +474,8 @@ function deleteTask(todo) {
     if (project) {
         const taskIndex = project.todos.indexOf(todo);
         if (taskIndex !== -1) {
-            project.todos.splice(taskIndex, 1); // Remove task from project
+            project.todos.splice(taskIndex, 1);
+            saveProjectsToLocalStorage();
         }
     }
 
@@ -454,9 +483,18 @@ function deleteTask(todo) {
     displayTasks(project);
 }
 
+function deleteProject(projectName) {
+    const projectIndex = projects.findIndex(proj => proj.name === projectName);
 
+    if (projectIndex !== -1) {
+        projects.splice(projectIndex, 1);
+        saveProjectsToLocalStorage();
+    }
+
+    content.innerHTML = '';
+    displayProjects();
+}
 window.onload = function() {
     populateProjectDropdown();
     displayProjects();
 };
-

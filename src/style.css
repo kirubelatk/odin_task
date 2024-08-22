@@ -1,7 +1,11 @@
-
+.dm-serif-text-regular {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 body{
-   
     margin: 0px;
+    font-family: 'DM Serif Text', serif;
 }
 nav{
     height: 100px;
@@ -61,12 +65,12 @@ nav{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .side-cont{
-    margin-left: 50px;
+    margin-left: 30px;
 }
 .side-cont li{
     border-bottom: 1px solid #13293d;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 200px;
+    width: 250px;
     margin-bottom: 20px;
     
 }
@@ -86,9 +90,12 @@ ul{
     font-weight: 800;
 }
 .wel-msg{
+    text-align: center;
     margin-left: 50px;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 200;
+    font-style: italic;
+
 }
 .content-main{
     margin-top: 60px;
